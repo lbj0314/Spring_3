@@ -19,11 +19,14 @@ public class NoticeDAO {
 	//어느 mapper 쓸건지 결정
 	private static final String NAMESPACE = "noticeMapper."; 
 	
-	
+	//count
+	public int noticeCount() throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "noticeCount");
+	}
 	
 	//list
-	public List<NoticeVO> noticeList() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "noticeList");
+	public List<NoticeVO> noticeList(Map<String, Integer> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "noticeList", map);
 
 	}
 	//selectOne

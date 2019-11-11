@@ -2,6 +2,7 @@ package com.iu.s3.dao.board;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,6 +17,12 @@ public class NoticeDAOTest extends TestAbstractCase{
 	@Inject
 	private NoticeDAO noticeDAO;
 	
+	@Test
+	public void noticeCountTest() throws Exception {
+		int count = noticeDAO.noticeCount()	;
+		assertEquals(105, count);
+	}
+	
 	//@Test
 	public void checkDAO() throws Exception{
 		assertNotNull(noticeDAO);
@@ -23,12 +30,15 @@ public class NoticeDAOTest extends TestAbstractCase{
 	
 	//@Test
 	public void noticeInsertTest() throws Exception {
+		for(int i = 0; i < 120; i++) {
 		NoticeVO noticeVO = new NoticeVO();
-		noticeVO.setTitle("twice!");
-		noticeVO.setWriter("momo");
-		noticeVO.setContents("HELLO! WORLD!");
+		noticeVO.setTitle("twice!"+i);
+		noticeVO.setWriter("momo"+i);
+		noticeVO.setContents("HELLO! WORLD!"+i);
 		int result = noticeDAO.noticeInsert(noticeVO);
-		assertEquals(1, result);
+		Thread.sleep(100);
+		}
+		//assertEquals(1, result);
 	}
 	
 	//@Test
@@ -46,12 +56,13 @@ public class NoticeDAOTest extends TestAbstractCase{
 	
 	//@Test
 	public void noticeListTest() throws Exception {
-		List<NoticeVO> list = noticeDAO.noticeList();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		List<NoticeVO> list = noticeDAO.noticeList(map);
 		assertNotEquals(0, list.size());
 		
 	}
 	
-	@Test
+	//@Test
 	public void noticeUpdateTest() throws Exception{
 		NoticeVO noticeVO = new NoticeVO();
 		noticeVO.setTitle("hello!");

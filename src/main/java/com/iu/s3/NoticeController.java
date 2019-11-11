@@ -1,6 +1,7 @@
 package com.iu.s3;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iu.s3.model.board.NoticeVO;
@@ -22,9 +24,12 @@ public class NoticeController {
 	
 	//noticeList
 	@RequestMapping(value = "noticeList", method = RequestMethod.GET)
-	public void noticeList(Model model) throws Exception{
-		List<NoticeVO> list = noticeService.noticeList();
-		model.addAttribute("list", list);
+	public void noticeList(Model model, @RequestParam(required = false, defaultValue = "1") int curPage ) throws Exception{
+		Map<String, Object> map = noticeService.noticeList(curPage);
+		List<NoticeVO> ar = (List<NoticeVO>)map.get("list");
+		int totalPage = (Integer)map.get("totalPage");
+		model.addAttribute("list", ar);
+		model.addAttribute("totalPage", totalPage);
 		
 	}
 	//noticeSelect
@@ -79,29 +84,30 @@ public class NoticeController {
 		
 		return mv;
 	}
-	//noticeUpdate
-//	@RequestMapping(value = "noticeUpdate", method = RequestMethod.POST)
-//	public String noticeUpdate() {
-//		return "notice/noticeUpdate";
-//	}
 	
-	@RequestMapping(value = "noticeUpdate", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView noticeUpdate(NoticeVO noticeVO, int num) throws Exception {
-
-		noticeVO = noticeService.noticeSelect(num);
+	//noticeUpdate
+	@RequestMapping(value = "noticeUpdate", method = RequestMethod.GET)
+	public Model noticeUpdate (int num, Model model ) throws Exception {
+		NoticeVO noticeVO = noticeService.noticeSelect(num);
+		model.addAttribute("vo", noticeVO);
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "noticeUpdate", method = RequestMethod.POST)
+	public ModelAndView noticeUpdate(NoticeVO noticeVO) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		int result = noticeService.noticeUpdate(noticeVO);
-		String msg = "fail";
-		
-//		if(result > 0) {
-//			msg="success";
-//		}
-		
-		mv.addObject("vo", noticeVO);
-//		mv.addObject("msg", msg);
-//		mv.addObject("path", "noticeList");
-		mv.setViewName("notice/noticeUpdate");
-
+	
+		String msg = "수정 실패";
+		if(result > 0) {
+			msg = "수정 성공";
+		}
+	
+		mv.addObject("msg", msg);
+		mv.addObject("path", "./noticeList");
+		mv.setViewName("common/common_result");
+	
 		return mv;
 	}
 	

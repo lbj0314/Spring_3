@@ -34,16 +34,18 @@
 			</c:forEach>
 		</table>
 		<div>
-				<c:forEach begin="1" end="10" var="i">
-					${ i } | ${st.last }
+			<ul class="pagination">
+				<c:forEach begin="1" end="${totalPage }" var="i">
+					 <li><a href="./noticeList?curPage=${i}">${i}</a></li>
 				</c:forEach>
-			</div>
+			</ul>
+		</div>
 		<!-- session member, memberDTO -->
 		<c:if test="${ empty member  }">
 			<button type="button" class="btn btn-info" id="btn_write">WRITE</button>
 		</c:if>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
 	$("#btn_write").click(function() {
 		location.href = "noticeWrite";
 	});
