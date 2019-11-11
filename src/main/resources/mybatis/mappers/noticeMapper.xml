@@ -21,7 +21,7 @@
  	<select id="noticeCount" resultType="java.lang.Integer">
  		SELECT COUNT(num) FROM notice
  	</select>
- 	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="java.util.Map">
+ 	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="com.iu.s3.util.RowMaker">
  		SELECT * FROM
 		(SELECT N.*, ROWNUM R FROM
 		(SELECT * FROM notice ORDER BY num DESC) N)

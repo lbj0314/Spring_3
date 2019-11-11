@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.iu.s3.model.board.NoticeVO;
 import com.iu.s3.service.board.NoticeService;
+import com.iu.s3.util.Pager;
 
 @Controller
 @RequestMapping("/notice/**")
@@ -24,12 +25,11 @@ public class NoticeController {
 	
 	//noticeList
 	@RequestMapping(value = "noticeList", method = RequestMethod.GET)
-	public void noticeList(Model model, @RequestParam(required = false, defaultValue = "1") int curPage ) throws Exception{
-		Map<String, Object> map = noticeService.noticeList(curPage);
-		List<NoticeVO> ar = (List<NoticeVO>)map.get("list");
-		int totalPage = (Integer)map.get("totalPage");
+	public void noticeList(Model model, Pager pager) throws Exception{
+		List<NoticeVO> ar = noticeService.noticeList(pager);
 		model.addAttribute("list", ar);
-		model.addAttribute("totalPage", totalPage);
+		//저장소의 위치만 넘김
+		model.addAttribute("pager", pager);
 		
 	}
 	//noticeSelect

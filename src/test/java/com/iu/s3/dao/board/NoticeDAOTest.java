@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.iu.s3.TestAbstractCase;
 import com.iu.s3.model.board.NoticeVO;
+import com.iu.s3.util.RowMaker;
 
 public class NoticeDAOTest extends TestAbstractCase{
 
@@ -56,8 +57,8 @@ public class NoticeDAOTest extends TestAbstractCase{
 	
 	//@Test
 	public void noticeListTest() throws Exception {
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		List<NoticeVO> list = noticeDAO.noticeList(map);
+		RowMaker rowMaker = new RowMaker();
+		List<NoticeVO> list = noticeDAO.noticeList(rowMaker);
 		assertNotEquals(0, list.size());
 		
 	}
