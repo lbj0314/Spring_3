@@ -45,17 +45,17 @@
 				</c:if>
 				<c:forEach begin="${ pager.startNum }" end="${ pager.lastNum }"
 					var="i">
-					<li><a href="./qnaList?curPage=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
+					<li><span id="${i}" class="list">${i}</span></li>
 				</c:forEach>
 				<c:if test="${ pager.curBlock lt pager.totalBlock }">
-					<li><span id="${pager.lastNum + 1 }">다음</span></li>
+					<li><span id="${pager.lastNum + 1 }" class="list">다음</span></li>
 				</c:if>
 			</ul>
 		</div>
 		<!-- Search -->
 		<div>
-			<form action="./qnaList" method="get">
-			<input type="hidden" value="1" name="curPage">
+			<form id="frm" action="./qnaList" method="get">
+			<input type="hidden" id="curPage" value="1" name="curPage">
 				<select name="kind">
 					<option id="kt" value="kt">Title</option>
 					<option id="kc" value="kc">Contents</option>
@@ -74,7 +74,16 @@
 		$("#btn_write").click(function() {
 			location.href = "qnaWrite";
 		});
-		$("#${pager.kind}").prop("selected", true);
+		
+		var kind = '${pager.kind}';
+		if(kind == ''){
+			kind = "kt";
+		}
+		$("#"+kind).prop("selected", true);
+		$(".list").click(function() {
+			$("#curPage").val($(this).attr("id"));
+			$("#frm").submit();
+		});
 	</script>
 </body>
 </html>
