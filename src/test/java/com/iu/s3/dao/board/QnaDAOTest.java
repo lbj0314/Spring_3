@@ -10,18 +10,23 @@ import org.junit.Test;
 
 import com.iu.s3.TestAbstractCase;
 import com.iu.s3.model.board.QnaVO;
-import com.iu.s3.util.RowMaker;
+import com.iu.s3.util.Pager;
 
 public class QnaDAOTest extends TestAbstractCase {
 	
 	@Inject
 	private QnaDAO qnaDAO;
 	
+	@Test
+	public void qnaDAOTest() throws Exception{
+		assertNotNull(qnaDAO);
+	}
+	
 	//list
 	//@Test
 	public void qnaListTest() throws Exception {
-		RowMaker rowMaker = new RowMaker();
-		List<QnaVO> list = qnaDAO.qnaList(rowMaker);
+		Pager pager = new Pager();
+		List<QnaVO> list = qnaDAO.qnaList(pager);
 		assertNotEquals(0, list.size());
 	}
 	

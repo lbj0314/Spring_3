@@ -13,6 +13,7 @@ public class QnaVO {
 	private int ref;
 	private int step;
 	private int depth;
+	
 	public int getNum() {
 		return num;
 	}

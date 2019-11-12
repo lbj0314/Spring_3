@@ -28,7 +28,7 @@
 			<c:forEach items="${list}" var="vo">
 				<tr>
 					<td>${ vo.num }</td>
-					<td><a href="qnaSelect?num=${ vo.num }">${ vo.title }</a></td>
+					<td><a href="./qnaSelect?num=${ vo.num }">${ vo.title }</a></td>
 					<td>${ vo.writer }</td>
 					<td>${ vo.reg_date }</td>
 					<td>${ vo.hit }</td>

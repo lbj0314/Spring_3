@@ -24,11 +24,18 @@ public class QnaController {
 	
 	//list
 	@RequestMapping(value = "qnaList", method = RequestMethod.GET )
-	public void qnaList(Model model, Pager pager) throws Exception {
-		List<QnaVO> ar = qnaService.qnaList(pager);
-		model.addAttribute("list", ar);
-		model.addAttribute("pager", pager);
+	public ModelAndView qnaList(Pager pager) throws Exception {
+		List<QnaVO> list = qnaService.qnaList(pager);
+//		model.addAttribute("list", list);
+//		model.addAttribute("pager", pager);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("pager", pager);
+		mv.setViewName("qna/qnaList");
+		
+		return mv;
 	}
+	
 	//insert
 	@RequestMapping(value = "qnaWrite", method = RequestMethod.GET)
 	public String qnaWrite() {

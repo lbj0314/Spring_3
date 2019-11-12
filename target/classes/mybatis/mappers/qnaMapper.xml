@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="qnaMapper">
- 	<select id="qnaList" parameterType="com.iu.s3.util.RowMaker" resultType="com.iu.s3.model.board.QnaVO">
+ 	<select id="qnaList" parameterType="com.iu.s3.util.Pager" resultType="com.iu.s3.model.board.QnaVO">
  		SELECT * FROM
  		(SELECT Q.*, ROWNUM R FROM
 		(SELECT * FROM qna ORDER BY num DESC) Q)
