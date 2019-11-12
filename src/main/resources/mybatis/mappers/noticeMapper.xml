@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="noticeMapper">
+  	<insert id="noticeInsert" parameterType="com.iu.s3.model.board.NoticeVO">
+  		INSERT INTO notice
+  		VALUES(board_seq.nextval, #{title}, #{writer}, #{contents}, SYSDATE, 0)
+  	</insert>
+ 	<delete id="noticeDelete" parameterType="java.lang.Integer">
+ 		DELETE notice
+ 		WHERE num = #{num}
+ 	</delete>
+ 	<!-- 1개 -->
+ 	<select id="noticeSelect" resultType="com.iu.s3.model.board.NoticeVO" parameterType="java.util.Map">
+ 		SELECT * FROM notice
+ 		WHERE num = #{num}
+ 	</select>
+ 	<!-- 전체 출력 -->
+ 	<select id="noticeCount" resultType="java.lang.Integer" parameterType="com.iu.s3.util.Pager">
+ 		SELECT COUNT(num) FROM notice
+ 			<choose>
+			<when test="kind == 'kt'">
+				WHERE title LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kc'">
+				WHERE contents LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				WHERE writer LIKE '%'||#{search}||'%'
+			</when>
+		</choose>
+ 	</select>
+ 	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="com.iu.s3.util.Pager">
+ 		SELECT * FROM
+		(SELECT N.*, ROWNUM R FROM
+		(SELECT * FROM notice 
+		<choose>
+			<when test="kind == 'kt'">
+				WHERE title LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kc'">
+				WHERE contents LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				WHERE writer LIKE '%'||#{search}||'%'
+			</when>
+		</choose>
+		ORDER BY num DESC) N)
+		WHERE R BETWEEN #{startRow} AND #{lastRow}
+ 	</select>
+ 	<update id="noticeUpdate" parameterType="com.iu.s3.model.board.NoticeVO">
+ 		UPDATE notice SET title = #{title}, contents = #{contents}
+ 		WHERE num = #{num}
+ 	</update>
+  </mapper>
