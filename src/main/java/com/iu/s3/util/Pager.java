@@ -58,7 +58,10 @@ public class Pager {
 	public Integer getLastNum() {
 		return lastNum;
 	}
-
+	
+	public Integer getStartRow() {
+		return startRow;
+	}
 	public void setStartRow(Integer startRow) {
 		this.startRow = startRow;
 	}
