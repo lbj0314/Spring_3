@@ -18,13 +18,36 @@
  		WHERE num = #{num}
  	</select>
  	<!-- 전체 출력 -->
- 	<select id="noticeCount" resultType="java.lang.Integer">
+ 	<select id="noticeCount" resultType="java.lang.Integer" parameterType="com.iu.s3.util.Pager">
  		SELECT COUNT(num) FROM notice
+ 			<choose>
+			<when test="kind == 'kt'">
+				WHERE title LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kc'">
+				WHERE contents LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				WHERE writer LIKE '%'||#{search}||'%'
+			</when>
+		</choose>
  	</select>
- 	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="com.iu.s3.util.RowMaker">
+ 	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="com.iu.s3.util.Pager">
  		SELECT * FROM
 		(SELECT N.*, ROWNUM R FROM
-		(SELECT * FROM notice ORDER BY num DESC) N)
+		(SELECT * FROM notice 
+		<choose>
+			<when test="kind == 'kt'">
+				WHERE title LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kc'">
+				WHERE contents LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				WHERE writer LIKE '%'||#{search}||'%'
+			</when>
+		</choose>
+		ORDER BY num DESC) N)
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
  	</select>
  	<update id="noticeUpdate" parameterType="com.iu.s3.model.board.NoticeVO">

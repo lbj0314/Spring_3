@@ -11,16 +11,17 @@ import org.junit.Test;
 
 import com.iu.s3.TestAbstractCase;
 import com.iu.s3.model.board.NoticeVO;
-import com.iu.s3.util.RowMaker;
+import com.iu.s3.util.Pager;
 
 public class NoticeDAOTest extends TestAbstractCase{
 
 	@Inject
 	private NoticeDAO noticeDAO;
 	
-	@Test
+	//@Test
 	public void noticeCountTest() throws Exception {
-		int count = noticeDAO.noticeCount()	;
+		Pager pager = new Pager();
+		int count = noticeDAO.noticeCount(pager);
 		assertEquals(105, count);
 	}
 	
@@ -55,10 +56,10 @@ public class NoticeDAOTest extends TestAbstractCase{
 		assertNotNull(noticeVO);
 	}
 	
-	//@Test
+	@Test
 	public void noticeListTest() throws Exception {
-		RowMaker rowMaker = new RowMaker();
-		List<NoticeVO> list = noticeDAO.noticeList(rowMaker);
+		Pager pager = new Pager();
+		List<NoticeVO> list = noticeDAO.noticeList(pager);
 		assertNotEquals(0, list.size());
 		
 	}

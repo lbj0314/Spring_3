@@ -1,18 +1,24 @@
 package com.iu.s3.util;
 
 public class Pager {
-	
+
 	private Integer curPage;
 	private Integer perPage;
 	private Integer startNum;
 	private Integer lastNum;
 	private Integer curBlock;
 	private Integer totalBlock;
-	
+
+	private Integer startRow;
+	private Integer lastRow;
+
+	private String kind;
+	private String search;
+
 	public Pager() {
 		perPage = 10;
 	}
-	
+
 	public Integer getTotalBlock() {
 		return totalBlock;
 	}
@@ -22,7 +28,7 @@ public class Pager {
 	}
 
 	public Integer getCurPage() {
-		if (this.curPage == null) {
+		if (this.curPage == null || this.curPage == 0) {
 			this.curPage = 1;
 		}
 		return curPage;
@@ -31,11 +37,14 @@ public class Pager {
 	public void setCurPage(Integer curPage) {
 		this.curPage = curPage;
 	}
-	
+
 	public Integer getPerPage() {
+		if (this.perPage == null || this.perPage == 0) {
+			this.perPage = 10;
+		}
 		return perPage;
 	}
-	
+
 	public void setPerPage(Integer perPage) {
 		this.perPage = perPage;
 	}
@@ -47,6 +56,42 @@ public class Pager {
 	public Integer getLastNum() {
 		return lastNum;
 	}
+
+	public Integer getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(Integer startRow) {
+		this.startRow = startRow;
+	}
+
+	public Integer getLastRow() {
+		return lastRow;
+	}
+
+	public void setLastRow(Integer lastRow) {
+		this.lastRow = lastRow;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getSearch() {
+		if (this.search == null) {
+			search = "";
+		}
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
 
 	public void makePager(int totalCount) {
 		//1. 전체 글의 개수
@@ -77,19 +122,17 @@ public class Pager {
 		if (curBlock == totalBlock) {
 			lastNum = totalPage;
 		}
-		
+
 	}
-	
-	public RowMaker makeRow() {
+
+	public void makeRow() {
 		//ROWNUM 계산
-		int startRow = (this.getCurPage() - 1) * perPage + 1;
-		int lastRow = this.getCurPage() * perPage;
-		RowMaker rowMaker = new RowMaker();
-		rowMaker.setStartRow(startRow);
-		rowMaker.setLastRow(lastRow);
-		
-		return rowMaker;
+		startRow = (this.getCurPage() - 1) * perPage + 1;
+		lastRow = this.getCurPage() * perPage;
+		this.setStartRow(startRow);
+		this.setLastRow(lastRow);
+
 	}
-	
-	
+
+
 }
