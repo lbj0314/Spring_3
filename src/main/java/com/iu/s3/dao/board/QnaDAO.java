@@ -18,8 +18,8 @@ public class QnaDAO {
 	private static final String NAMESPACE = "qnaMapper."; 
 	
 	//count
-	public int qnaCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE + "qnaCount");
+	public int qnaCount(Pager pager) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "qnaCount", pager);
 	}
 	
 	//list

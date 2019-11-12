@@ -41,16 +41,29 @@
 		<div>
 			<ul class="pagination">
 				<c:if test="${ pager.curBlock gt 1 }">
-					<li><a href="./qnaList?curPage=${pager.startNum-1 }">이전</a></li>
+					<li><span id="${pager.startNum-1 }" class="list">이전</span></li>
 				</c:if>
 				<c:forEach begin="${ pager.startNum }" end="${ pager.lastNum }"
 					var="i">
-					<li><a href="./qnaList?curPage=${i}">${i}</a></li>
+					<li><a href="./qnaList?curPage=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
 				</c:forEach>
 				<c:if test="${ pager.curBlock lt pager.totalBlock }">
-				<li><a href="./qnaList?curPage=${pager.lastNum + 1 }">다음</a></li>
+					<li><span id="${pager.lastNum + 1 }">다음</span></li>
 				</c:if>
 			</ul>
+		</div>
+		<!-- Search -->
+		<div>
+			<form action="./qnaList" method="get">
+			<input type="hidden" value="1" name="curPage">
+				<select name="kind">
+					<option id="kt" value="kt">Title</option>
+					<option id="kc" value="kc">Contents</option>
+					<option id="kw" value="kw">Writer</option>
+				</select> 
+				<input type="text" name="search" value="${ pager.search }">
+				<button class="btn btn-info">SEARCH</button>
+			</form>
 		</div>
 		<!-- session member, memberDTO -->
 		<c:if test="${ empty member  }">
@@ -61,6 +74,7 @@
 		$("#btn_write").click(function() {
 			location.href = "qnaWrite";
 		});
+		$("#${pager.kind}").prop("selected", true);
 	</script>
 </body>
 </html>

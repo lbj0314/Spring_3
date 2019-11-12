@@ -4,15 +4,39 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="qnaMapper">
+ 	
  	<select id="qnaList" parameterType="com.iu.s3.util.Pager" resultType="com.iu.s3.model.board.QnaVO">
  		SELECT * FROM
  		(SELECT Q.*, ROWNUM R FROM
-		(SELECT * FROM qna ORDER BY num DESC) Q)
+		(SELECT * FROM qna
+		<choose>
+			<when test="kind == 'kt'">
+				WHERE title LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				WHERE writer LIKE '%'||#{search}||'%'
+			</when>
+			<otherwise>
+				WHERE contents LIKE '%'||#{search}||'%'
+			</otherwise>
+		</choose>
+		ORDER BY num DESC) Q)
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
  		
  	</select>
- 	<select id="qnaCount" resultType="java.lang.Integer">
+ 	<select id="qnaCount" resultType="java.lang.Integer" parameterType="com.iu.s3.util.Pager">
  		SELECT COUNT(num) FROM qna
+ 		<choose>
+			<when test="kind == 'kt'">
+				WHERE title LIKE '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kw'">
+				WHERE writer LIKE '%'||#{search}||'%'
+			</when>
+			<otherwise>
+				WHERE contents LIKE '%'||#{search}||'%'
+			</otherwise>
+		</choose>
  	</select>
  	<insert id="qnaInsert" parameterType="com.iu.s3.model.board.QnaVO">
  		INSERT INTO qna

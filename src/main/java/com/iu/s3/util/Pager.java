@@ -17,6 +17,9 @@ public class Pager {
 	private Integer curBlock; //현재 블락 번호
 	private Integer totalBlock; //전체 블락의 개수
 
+	//search
+	private String kind; // 검색 종류
+	private String search; // 검색어
 	
 	public Integer getCurPage() {
 		if (this.curPage == null || this.curPage == 0) {
@@ -65,6 +68,23 @@ public class Pager {
 		this.lastRow = lastRow;
 	}
 
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+	public String getSearch() {
+//		search = "%"+search+"%";
+		if (this.search == null) {
+			search = "";
+		}
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	
 	
 	public void makePager(int totalCount) {
 		//1. 전체 글의 개수

@@ -25,6 +25,8 @@ public class QnaController {
 	//list
 	@RequestMapping(value = "qnaList", method = RequestMethod.GET )
 	public ModelAndView qnaList(Pager pager) throws Exception {
+		System.out.println(pager.getKind());
+		System.out.println(pager.getSearch());
 		List<QnaVO> list = qnaService.qnaList(pager);
 //		model.addAttribute("list", list);
 //		model.addAttribute("pager", pager);
@@ -55,6 +57,5 @@ public class QnaController {
 		mv.setViewName("common/common_result");
 		
 		return mv;
-		
 	}
 }

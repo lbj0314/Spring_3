@@ -17,7 +17,7 @@ public class QnaDAOTest extends TestAbstractCase {
 	@Inject
 	private QnaDAO qnaDAO;
 	
-	@Test
+	//@Test
 	public void qnaDAOTest() throws Exception{
 		assertNotNull(qnaDAO);
 	}
@@ -32,19 +32,21 @@ public class QnaDAOTest extends TestAbstractCase {
 	
 	//count
 	//@Test
-	public void qnaCountTest() throws Exception {
-		int count = qnaDAO.qnaCount();
+	public void qnaCountTest(Pager pager) throws Exception {
+		int count = qnaDAO.qnaCount(pager);
 		assertEquals(1, count);
 	}
 	//insert
-	//@Test
+	@Test
 	public void qnaInsertTest() throws Exception{
 		QnaVO qnaVO = new QnaVO();
-		qnaVO.setTitle("twice!");
-		qnaVO.setWriter("momo");
-		qnaVO.setContents("HELLO! WORLD!");
+		for(int i = 0; i < 100; i++) {
+		qnaVO.setTitle("twice!" + i);
+		qnaVO.setWriter("momo" + i);
+		qnaVO.setContents("HELLO! WORLD!" + i);
 		int result = qnaDAO.qnaInsert(qnaVO);
-		
-		assertEquals(1, result);
+		Thread.sleep(100);
+		}
+//		assertEquals(100, result);
 	}
 }
