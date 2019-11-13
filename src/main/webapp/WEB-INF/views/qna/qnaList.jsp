@@ -20,21 +20,23 @@
 				<th>WRITER</th>
 				<th>DATE</th>
 				<th>HIT</th>
-				<th>REF</th>
+<!-- 				<th>REF</th>
 				<th>STEP</th>
-				<th>DEPTH</th>
+				<th>DEPTH</th> -->
 			</tr>
 
 			<c:forEach items="${list}" var="vo">
 				<tr>
 					<td>${ vo.num }</td>
-					<td><a href="./qnaSelect?num=${ vo.num }">${ vo.title }</a></td>
+					
+					<td><c:forEach begin="1" end="${ vo.depth }">--</c:forEach><a href="./qnaSelect?num=${ vo.num }">${ vo.title }</a></td>
+					
 					<td>${ vo.writer }</td>
 					<td>${ vo.reg_date }</td>
 					<td>${ vo.hit }</td>
-					<td>${ vo.ref }</td>
+<%-- 					<td>${ vo.ref }</td>
 					<td>${ vo.step }</td>
-					<td>${ vo.depth }</td>
+					<td>${ vo.depth }</td> --%>
 				</tr>
 			</c:forEach>
 		</table>
@@ -70,6 +72,11 @@
 			<button type="button" class="btn btn-info" id="btn_write">WRITE</button>
 		</c:if>
 	</div>
+	
+	<!-- <div>
+		<a href="./qnaWrite">Write</a>
+	</div> -->
+	
 	<script type="text/javascript">
 		$("#btn_write").click(function() {
 			location.href = "qnaWrite";

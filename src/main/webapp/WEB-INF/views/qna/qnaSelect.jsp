@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>\
+<title>Qna</title>\
 <c:import url="../layout/bootStrap.jsp" />
 </head>
 <body>
 <c:import url="../layout/nav.jsp" />
-	<h1>Notice Select Page</h1>
+	<h1>Qna Select Page</h1>
 	<div class="container">
 	<table class="table">
 			
@@ -37,10 +37,11 @@
 	</div>
 		<div>
 <%-- 	<%if(memberDTO !=null && memberDTO.getId().equals(noticeDTO.getWriter()) ){ %> --%>
-			<a href="./noticeUpdate?num=${vo.num }" class="btn btn-success">Update</a>
-			<a href="./noticeDelete?num=${vo.num }" class="btn btn-danger">Delete</a>
+			<a href="./qnaUpdate?num=${vo.num }" class="btn btn-success">Update</a>
+			<a href="./qnaDelete?num=${vo.num }" class="btn btn-danger">Delete</a>
+			<a href="./qnaReply?num=${vo.num }" class="btn btn-info">Ref</a>
 		<%-- <% }%>  --%>
-			<a href="./noticeList" class="btn btn-primary">List</a>
+			<a href="./qnaList" class="btn btn-primary">List</a>
 		</div>
 	</div>
 </body>

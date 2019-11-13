@@ -44,7 +44,7 @@ public class QnaDAOTest extends TestAbstractCase {
 		qnaVO.setTitle("twice!" + i);
 		qnaVO.setWriter("momo" + i);
 		qnaVO.setContents("HELLO! WORLD!" + i);
-		int result = qnaDAO.qnaInsert(qnaVO);
+		int result = qnaDAO.qnaWrite(qnaVO);
 		Thread.sleep(100);
 		}
 //		assertEquals(100, result);

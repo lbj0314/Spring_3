@@ -25,8 +25,34 @@ public class QnaService {
 		
 	}
 	
+	//select
+	public QnaVO qnaSelect(int num) throws Exception{
+		return qnaDAO.qnaSelect(num);
+	}
+	
 	//insert
-	public int qnaInsert(QnaVO qnaVO) throws Exception{
-		return qnaDAO.qnaInsert(qnaVO);
+	public int qnaWrite(QnaVO qnaVO) throws Exception{
+		return qnaDAO.qnaWrite(qnaVO);
+	}
+	
+	//reply
+	public int qnaReply(QnaVO qnaVO) throws Exception{
+		//부모의 정보
+		QnaVO parent = qnaDAO.qnaSelect(qnaVO.getNum());
+		int result = qnaDAO.qnaReply(parent);
+		qnaVO.setRef(parent.getRef());
+		qnaVO.setStep(parent.getStep()+1);
+		qnaVO.setDepth(parent.getDepth()+1);
+		result = qnaDAO.qnaReply(qnaVO);
+		return result;
+	}
+	//reply Update
+	public int qnaReplyUpdate(QnaVO qnaVO) throws Exception{
+		return qnaDAO.qnaReplyUpdate(qnaVO);
+	}
+	
+	//delete
+	public int qnaDelete(int num) throws Exception {
+		return qnaDAO.qnaDelete(num);
 	}
 }
